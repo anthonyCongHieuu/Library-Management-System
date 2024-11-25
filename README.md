@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Library Management System
 
 ## Overview
@@ -53,3 +54,6 @@ This project is licensed under the MIT License.
 
 ## Acknowledgments
 - This project is inspired by the need for efficient library management in educational and public libraries.
+=======
+# Library-Management-System
+>>>>>>> c79cc7ebe2662aa1128fd10b15abb839aee8bad6
