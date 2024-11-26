@@ -16,7 +16,7 @@ This project is a full-stack Library Management System that facilitates the mana
 ### Installation
 1. Clone the repository:
 ```
-git clone https://github.com/AnasMohammad4321/Library-Management-System.git
+git clone https://github.com/anthonyCongHieuu/Library-Management-System.git
 ```
 2. Navigate to the `node-backend` directory:
 ```
