@@ -11,8 +11,14 @@ const LoginPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem('user'));  // Kiểm tra thông tin người dùng trong localStorage
+
     if (user && email === user.email && password === user.password) {
-      navigate('/');  // Điều hướng đến trang chính nếu đăng nhập thành công
+      // Điều hướng đến dashboard tương ứng với vai trò người dùng
+      if (user.role === 'admin') {
+        navigate('/admin-dashboard');  // Điều hướng admin đến dashboard admin
+      } else {
+        navigate('/reader-dashboard');  // Điều hướng reader đến dashboard của người đọc
+      }
     } else {
       alert('Email hoặc mật khẩu không đúng');
     }
