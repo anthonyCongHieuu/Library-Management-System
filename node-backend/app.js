@@ -1,22 +1,28 @@
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./database');
-const bookRoutes = require('./routes/bookRoutes'); // Ensure the path is correct
-const authRoutes = require('./routes/authRoutes'); // Thêm dòng này để khai báo authRoutes
+const bookRoutes = require('./routes/bookRoutes');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');  // Import routes
+require('dotenv').config();
 
+
+// Khởi tạo ứng dụng express
 const app = express();
 const port = 3000;
 
 app.use(cors());
-app.use(express.json());// Để xử lý JSON từ frontend
-app.use('/api/auth', authRoutes); // Dùng route cho đăng ký
+app.use(express.json()); // Để xử lý JSON từ frontend
 
-// Connect to MongoDB
+// Đăng ký các route
+app.use('/api/users', userRoutes); // Đặt '/api/users' làm tiền tố cho các route người dùng
+app.use('/api/auth', authRoutes);  // Đặt '/api/auth' làm tiền tố cho các route đăng ký
+app.use('/', bookRoutes);  // Đăng ký các route sách
+
+// Kết nối MongoDB
 connectDB();
 
-// Use book routes
-app.use('/', bookRoutes);
-
+// Khởi động server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
