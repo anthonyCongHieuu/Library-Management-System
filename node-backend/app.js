@@ -1,26 +1,25 @@
 const express = require('express');
 const cors = require('cors');
-const connectDB = require('./database');
+const connectDB = require('./database');  // Đảm bảo đường dẫn đúng
 const bookRoutes = require('./routes/bookRoutes');
 const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');  // Import routes
+const userRoutes = require('./routes/userRoutes');
 require('dotenv').config();
-
 
 // Khởi tạo ứng dụng express
 const app = express();
 const port = 3000;
 
-app.use(cors());
-app.use(express.json()); // Để xử lý JSON từ frontend
-
-// Đăng ký các route
-app.use('/api/users', userRoutes); // Đặt '/api/users' làm tiền tố cho các route người dùng
-app.use('/api/auth', authRoutes);  // Đặt '/api/auth' làm tiền tố cho các route đăng ký
-app.use('/', bookRoutes);  // Đăng ký các route sách
-
 // Kết nối MongoDB
-connectDB();
+connectDB();  // Gọi hàm kết nối MongoDB
+
+// Các middleware và routes
+app.use(cors());
+app.use(express.json());
+
+app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/', bookRoutes);
 
 // Khởi động server
 app.listen(port, () => {

@@ -10,7 +10,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import ReaderDashboardPage from './pages/ReaderDashboardPage';
 import ManageUsersPage from './pages/ManageUsersPage';  // Import thêm
-import ReportsPage from './pages/ReportsPage';        // Import thêm
+import ReportsPage from './pages/ReportsPage';   
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';     // Import thêm
 
 
 const App = () => {
