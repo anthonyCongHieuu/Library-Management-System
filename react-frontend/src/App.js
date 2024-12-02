@@ -10,9 +10,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import ReaderDashboardPage from './pages/ReaderDashboardPage';
 import ManageUsersPage from './pages/ManageUsersPage';  // Import thêm
-import ReportsPage from './pages/ReportsPage';   
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';     // Import thêm
+import ReportsPage from './pages/ReportsPage';        // Import thêm
+import './App.css';
+
 
 
 const App = () => {
@@ -57,7 +57,7 @@ const App = () => {
             />
             {/* Dashboard cho Admin */}
             <Route
-              path="/admin-dashboard"
+              path="/admin-Dashboard"
               element={
                 <ProtectedRoute role="admin">
                   <AdminDashboardPage />
@@ -66,7 +66,7 @@ const App = () => {
             />
             {/* Dashboard cho Reader */}
             <Route
-              path="/reader-dashboard"
+              path="/reader-Dashboard"
               element={
                 <ProtectedRoute role="reader">
                   <ReaderDashboardPage />

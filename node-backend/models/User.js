@@ -1,31 +1,28 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// models/User.js
 
-// Tạo schema cho User
-const userSchema = new Schema({
-  username: {
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  fullName: {
     type: String,
-    required: [true, 'Username is required'],  // Kiểm tra username thay vì name
-    trim: true,
+    required: true,
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
-    unique: true,
-    trim: true,
-    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
+    required: true,
+    unique: true,  // Đảm bảo email là duy nhất
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
-    minlength: [6, 'Password must be at least 6 characters long'],
+    required: true,
   },
   role: {
     type: String,
-    required: [true, 'Role is required'],
-    enum: ['reader', 'admin'], // Chỉ cho phép 'reader' hoặc 'admin'
-    default: 'reader', // Giá trị mặc định là 'reader'
+    enum: ['reader', 'admin'],  // Các vai trò hợp lệ
+    default: 'reader',
   },
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

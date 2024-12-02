@@ -1,9 +1,11 @@
 import React from 'react';
 import { List, ListItem, ListItemText, Drawer, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
 
 const Sidebar = () => {
   return (
+    
     <Drawer
       variant="permanent"
       sx={{
@@ -17,6 +19,10 @@ const Sidebar = () => {
         },
       }}
     >
+      <div>
+      {/* Các mục menu khác */}
+      <LogoutButton />
+    </div>
       <div style={styles.header}>
         <h2>Library Menu</h2>
       </div>

@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import { Button, TextField, Box, Typography } from '@mui/material';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Để điều hướng giữa các trang
 
-const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook để điều hướng
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
 
-  // Hàm xử lý đăng nhập
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const user = JSON.parse(localStorage.getItem('user'));  // Kiểm tra thông tin người dùng trong localStorage
+  const navigate = useNavigate();  // Để điều hướng sau khi đăng nhập thành công
 
-    if (user && email === user.email && password === user.password) {
-      // Điều hướng đến dashboard tương ứng với vai trò người dùng
-      if (user.role === 'admin') {
-        navigate('/admin-dashboard');  // Điều hướng admin đến dashboard admin
-      } else {
-        navigate('/reader-dashboard');  // Điều hướng reader đến dashboard của người đọc
-      }
-    } else {
-      alert('Email hoặc mật khẩu không đúng');
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  // Hàm điều hướng đến trang đăng ký
-  const handleRegister = () => {
-    navigate('/register');  // Chuyển hướng đến trang đăng ký
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3000/api/users/login', formData);
+      localStorage.setItem('token', response.data.token);  // Lưu token vào localStorage
+      alert('Login successful!');
+      navigate('/Dashboard');  // Điều hướng đến trang dashboard sau khi đăng nhập thành công
+    } catch (error) {
+      alert('Error: ' + error.response.data.message);
+    }
   };
 
   return (
@@ -47,8 +49,9 @@ const LoginPage = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
+          name="email"
           required
         />
         <TextField
@@ -57,8 +60,9 @@ const LoginPage = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
+          name="password"
           required
         />
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -69,7 +73,7 @@ const LoginPage = () => {
             variant="outlined"
             color="secondary"
             sx={{ marginTop: '10px' }}
-            onClick={handleRegister}  // Khi nhấn, điều hướng đến trang đăng ký
+            onClick={() => navigate('/register')} // Điều hướng đến trang đăng ký
           >
             Đăng ký
           </Button>
@@ -79,4 +83,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

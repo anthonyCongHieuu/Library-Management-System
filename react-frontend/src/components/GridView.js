@@ -1,5 +1,3 @@
-// src/components/GridView.js
-
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
@@ -14,10 +12,10 @@ const GridView = ({ books }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {books.map((books) => 
-                        <TableRow key={books._id}>
-                            <TableCell>{books.title}</TableCell>
-                            <TableCell>{books.author}</TableCell>
+                    {books.map((book) => 
+                        <TableRow key={book._id}>
+                            <TableCell>{book.title}</TableCell>
+                            <TableCell>{book.author}</TableCell>
                         </TableRow>
                     )}
                 </TableBody>

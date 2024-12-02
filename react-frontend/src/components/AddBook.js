@@ -10,9 +10,9 @@ const AddBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/books', { title, author });
+      const response = await axios.post('http://localhost:3001/api/books', { title, author });  // Kiểm tra endpoint backend
       setMessage(response.data.message);
-      setTitle('');
+      setTitle('');  // Reset form sau khi thêm sách
       setAuthor('');
     } catch (error) {
       console.error('Error:', error);

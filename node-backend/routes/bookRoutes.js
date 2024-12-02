@@ -1,6 +1,6 @@
 const express = require('express');
+const { verifyToken, verifyAdmin } = require('../middleware/authMiddleware');  // Import middleware
 const Book = require('../models/Book');
-const { verifyToken, verifyAdmin } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 // Lấy tất cả sách

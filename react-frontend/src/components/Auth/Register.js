@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
 import { Button, TextField, Box, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterPage = () => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('reader'); // Mặc định là 'reader'
-  const navigate = useNavigate();
+const Register = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    role: '',  // Khởi tạo role là rỗng
+  });
 
-  const handleRegister = (e) => {
+  const navigate = useNavigate();  // Để điều hướng sau khi đăng ký thành công
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleRegister = async (e) => {
     e.preventDefault();
-    const newUser = { fullName, email, password, role };  // Gán vai trò được chọn từ radio button
-    localStorage.setItem('user', JSON.stringify(newUser));  // Lưu thông tin người dùng vào localStorage
-    navigate('/login');  // Sau khi đăng ký thành công, chuyển hướng về trang đăng nhập
+    try {
+      const response = await axios.post('http://localhost:3000/api/users/register', formData);
+      if (response && response.data) {
+        alert(response.data.message);
+        navigate('/login');  // Điều hướng về trang login sau khi đăng ký thành công
+      } else {
+        alert('No response data received');
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        alert('Error: ' + error.response.data.message);
+      } else {
+        alert('Error: Unknown error');
+      }
+    }
   };
 
   return (
@@ -34,8 +58,9 @@ const RegisterPage = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          value={formData.fullName}
+          onChange={handleChange}
+          name="fullName"
           required
         />
         <TextField
@@ -44,8 +69,9 @@ const RegisterPage = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
+          name="email"
           required
         />
         <TextField
@@ -54,8 +80,9 @@ const RegisterPage = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
+          name="password"
           required
         />
         
@@ -64,8 +91,9 @@ const RegisterPage = () => {
           <FormLabel component="legend">Vai trò</FormLabel>
           <RadioGroup
             row
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+            value={formData.role}
+            onChange={handleChange}
+            name="role"
           >
             <FormControlLabel value="reader" control={<Radio />} label="Người đọc" />
             <FormControlLabel value="admin" control={<Radio />} label="Quản trị viên" />
@@ -85,4 +113,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default Register;
